@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Accessible Form</title>
+  <style>
+    body {
+      background-color: #fdfdfd;
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+    }
+    form {
+      max-width: 500px;
+      margin: auto;
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 1.5rem;
+      border-radius: 6px;
+    }
+    fieldset {
+      border: none;
+      padding: 0;
+    }
+    legend {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+    label {
+      margin-top: 1rem;
+      display: block;
+    }
+    input, select {
+      padding: 10px;
+      margin-top: 0.5rem;
+      width: 100%;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 1.5rem;
+      padding: 10px 20px;
+      background: #007bff;
+      border: none;
+      color: white;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <form aria-labelledby="contact-heading">
+    <fieldset>
+      <legend id="contact-heading">Contact Us</legend>
+
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" aria-required="true" required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" aria-required="true" required>
+
+      <label for="inquiry">Inquiry Type:</label>
+      <select id="inquiry" name="inquiry">
+        <option>Support</option>
+        <option>Sales</option>
+      </select>
+
+      <button type="submit">Submit</button>
+    </fieldset>
+  </form>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Responsive Images</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2rem;
+      background: #eef;
+      text-align: center;
+    }
+    picture img {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Responsive Image</h2>
+  <picture>
+    <source media="(min-width: 768px)" srcset="https://via.placeholder.com/800x400?text=Large+Image">
+    <source media="(min-width: 480px)" srcset="https://via.placeholder.com/600x300?text=Medium+Image">
+    <img src="https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg" alt="Responsive example">
+  </picture>
+</body>
+</html>

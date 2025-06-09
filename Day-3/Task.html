@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Projects Showcase</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 20px;
+      background: #f7f7f7;
+    }
+    section {
+      background: #fff;
+      padding: 20px;
+      margin: 1rem 0;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    input, button {
+      padding: 8px;
+      margin: 5px;
+    }
+    .todo-list li {
+      margin-top: 5px;
+    }
+    .slider img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. Basic Calculator -->
+  <section>
+    <h2>1. Calculator</h2>
+    <input type="number" id="num1" placeholder="Num 1">
+    <input type="number" id="num2" placeholder="Num 2">
+    <button onclick="calculate('+')">+</button>
+    <button onclick="calculate('-')">-</button>
+    <button onclick="calculate('*')">*</button>
+    <button onclick="calculate('/')">/</button>
+    <p>Result: <span id="calcResult">0</span></p>
+  </section>
+
+  <!-- 2. To-Do App -->
+  <section>
+    <h2>2. To-Do App</h2>
+    <input type="text" id="todoInput" placeholder="Add a task">
+    <button onclick="addTodo()">Add</button>
+    <ul id="todoList" class="todo-list"></ul>
+  </section>
+
+  <!-- 3. Image Slider -->
+  <section>
+    <h2>3. Image Slider</h2>
+    <div class="slider">
+      <img id="sliderImg" src="https://via.placeholder.com/300x200?text=1" alt="Slide">
+      <br>
+      <button onclick="prevSlide()">Prev</button>
+      <button onclick="nextSlide()">Next</button>
+    </div>
+  </section>
+
+  <!-- 4. Debounced Input -->
+  <section>
+    <h2>4. Debounced Input</h2>
+    <input type="text" id="debounceInput" placeholder="Type slowly...">
+    <p>Debounced Output: <span id="debouncedText"></span></p>
+  </section>
+
+  <!-- 5. Color Guessing Game -->
+  <section>
+    <h2>5. Color Guessing Game</h2>
+    <p>Guess this RGB color: <strong id="colorCode"></strong></p>
+    <input type="text" id="colorGuess" placeholder="Enter RGB like rgb(255,0,0)">
+    <button onclick="checkColor()">Check</button>
+    <p id="colorResult"></p>
+    <div id="colorBox" style="width:100px;height:100px;margin-top:10px;border:1px solid #000;"></div>
+  </section>
+
+  <script>
+    // 1. Calculator
+    function calculate(op) {
+      const a = parseFloat(document.getElementById("num1").value);
+      const b = parseFloat(document.getElementById("num2").value);
+      let result = 0;
+      switch (op) {
+        case '+': result = a + b; break;
+        case '-': result = a - b; break;
+        case '*': result = a * b; break;
+        case '/': result = b !== 0 ? a / b : 'Infinity'; break;
+      }
+      document.getElementById("calcResult").textContent = result;
+    }
+
+    // 2. To-do List
+    const todos = [];
+    function addTodo() {
+      const input = document.getElementById("todoInput");
+      if (input.value.trim() !== "") {
+        todos.push(input.value.trim());
+        updateTodoList();
+        input.value = "";
+      }
+    }
+
+    function updateTodoList() {
+      const list = document.getElementById("todoList");
+      list.innerHTML = "";
+      todos.forEach((item, i) => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        list.appendChild(li);
+      });
+    }
+
+    // 3. Image Slider
+    const images = [
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJxo2NFiYcR35GzCk5T3nxA7rGlSsXvIfJwg&s",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUPIfiGgUML8G3ZqsNLHfaCnZK3I5g4tJabQ&s",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1zwhySGCEBxRRFYIcQgvOLOpRGqrT3d7Qng&s"
+    ];
+    let currentIndex = 0;
+
+    function showSlide() {
+      document.getElementById("sliderImg").src = images[currentIndex];
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % images.length;
+      showSlide();
+    }
+
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      showSlide();
+    }
+
+    // 4. Debounce Function
+    function debounce(fn, delay) {
+      let timeout;
+      return (...args) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => fn(...args), delay);
+      };
+    }
+
+    const updateDebouncedText = debounce((text) => {
+      document.getElementById("debouncedText").textContent = text;
+    }, 500);
+
+    document.getElementById("debounceInput").addEventListener("input", (e) => {
+      updateDebouncedText(e.target.value);
+    });
+
+    // 5. Color Guessing Game
+    let targetColor = "";
+
+    function generateColor() {
+      const r = Math.floor(Math.random() * 256);
+      const g = Math.floor(Math.random() * 256);
+      const b = Math.floor(Math.random() * 256);
+      targetColor = `rgb(${r},${g},${b})`;
+      document.getElementById("colorCode").textContent = targetColor;
+      document.getElementById("colorBox").style.background = targetColor;
+    }
+
+    function checkColor() {
+      const guess = document.getElementById("colorGuess").value.trim().toLowerCase();
+      const result = document.getElementById("colorResult");
+      if (guess === targetColor) {
+        result.textContent = "🎉 Correct!";
+        result.style.color = "green";
+      } else {
+        result.textContent = "❌ Try Again!";
+        result.style.color = "red";
+      }
+    }
+
+    // Init
+    showSlide();
+    generateColor();
+  </script>
+
+</body>
+</html>

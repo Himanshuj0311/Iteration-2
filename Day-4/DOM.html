@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS UI Features</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: sans-serif; margin: 20px; background: #f0f0f0; }
+    section { background: #fff; padding: 20px; margin: 1rem 0; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+
+    /* 1. Modal */
+    .modal {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center;
+    }
+    .modal-content {
+      background: white; padding: 2rem; border-radius: 10px; width: 300px; text-align: center;
+    }
+
+    /* 2. To-Do List */
+    .todo-item { display: flex; justify-content: space-between; margin: 5px 0; }
+    .todo-item.completed span { text-decoration: line-through; color: gray; }
+
+    /* 3. Tabs */
+    .tabs { display: flex; gap: 10px; margin-bottom: 10px; }
+    .tab-btn { padding: 5px 10px; cursor: pointer; background: #ccc; border: none; }
+    .tab-btn.active { background: #007bff; color: white; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* 4. Gallery */
+    .filters { margin-bottom: 10px; }
+    .gallery img { width: 100px; margin: 5px; }
+    .gallery { display: flex; flex-wrap: wrap; }
+
+    /* 5. Form Validator */
+    .error { color: red; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+
+  <!-- 1. Modal -->
+  <section>
+    <h2>1. Modal Popup</h2>
+    <button onclick="document.getElementById('myModal').style.display='flex'">Open Modal</button>
+    <div class="modal" id="myModal">
+      <div class="modal-content">
+        <p>This is a modal!</p>
+        <button onclick="document.getElementById('myModal').style.display='none'">Close</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. To-Do List -->
+  <section>
+    <h2>2. To-Do List</h2>
+    <input type="text" id="todoInput" placeholder="New task">
+    <button onclick="addTodo()">Add</button>
+    <ul id="todoList"></ul>
+  </section>
+
+  <!-- 3. Tabbed Content -->
+  <section>
+    <h2>3. Tabbed Interface</h2>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab(0)">Tab 1</button>
+      <button class="tab-btn" onclick="switchTab(1)">Tab 2</button>
+      <button class="tab-btn" onclick="switchTab(2)">Tab 3</button>
+    </div>
+    <div class="tab-content active">Content of Tab 1</div>
+    <div class="tab-content">Content of Tab 2</div>
+    <div class="tab-content">Content of Tab 3</div>
+  </section>
+
+  <!-- 4. Image Gallery Filter -->
+  <section>
+    <h2>4. Image Gallery Filter</h2>
+    <div class="filters">
+      <button onclick="filterGallery('all')">All</button>
+      <button onclick="filterGallery('nature')">Nature</button>
+      <button onclick="filterGallery('tech')">Tech</button>
+    </div>
+    <div class="gallery">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1zwhySGCEBxRRFYIcQgvOLOpRGqrT3d7Qng&s" data-category="nature">
+      <img src="https://via.placeholder.com/100?text=Tech1" data-category="tech">
+      <img src="https://via.placeholder.com/100?text=Nature2" data-category="nature">
+      <img src="https://via.placeholder.com/100?text=Tech2" data-category="tech">
+    </div>
+  </section>
+
+  <!-- 5. Form Validator -->
+  <section>
+    <h2>5. Form Validator</h2>
+    <form onsubmit="return validateForm()">
+      <input type="text" id="name" placeholder="Name"><br>
+      <input type="email" id="email" placeholder="Email"><br>
+      <button type="submit">Submit</button>
+      <p id="formError" class="error"></p>
+    </form>
+  </section>
+
+  <script>
+    // 2. To-Do List
+    function addTodo() {
+      const input = document.getElementById("todoInput");
+      const text = input.value.trim();
+      if (text) {
+        const li = document.createElement("li");
+        li.className = "todo-item";
+        li.innerHTML = `<span onclick="toggleComplete(this)">${text}</span>
+                        <button onclick="deleteItem(this)">❌</button>`;
+        document.getElementById("todoList").appendChild(li);
+        input.value = "";
+      }
+    }
+
+    function toggleComplete(span) {
+      span.parentElement.classList.toggle("completed");
+    }
+
+    function deleteItem(btn) {
+      btn.parentElement.remove();
+    }
+
+    // 3. Tabs
+    function switchTab(index) {
+      const tabs = document.querySelectorAll(".tab-btn");
+      const contents = document.querySelectorAll(".tab-content");
+      tabs.forEach((t, i) => {
+        t.classList.toggle("active", i === index);
+        contents[i].classList.toggle("active", i === index);
+      });
+    }
+
+    // 4. Gallery Filter
+    function filterGallery(category) {
+      const images = document.querySelectorAll(".gallery img");
+      images.forEach(img => {
+        const show = category === 'all' || img.dataset.category === category;
+        img.style.display = show ? 'inline-block' : 'none';
+      });
+    }
+
+    // 5. Form Validator
+    function validateForm() {
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const errorEl = document.getElementById("formError");
+      if (!name || !email) {
+        errorEl.textContent = "Please fill in both fields.";
+        return false;
+      } else if (!/^[^@]+@[^@]+\.[a-z]+$/i.test(email)) {
+        errorEl.textContent = "Please enter a valid email.";
+        return false;
+      }
+      errorEl.textContent = "";
+      alert("Form submitted!");
+      return true;
+    }
+  </script>
+
+</body>
+</html>

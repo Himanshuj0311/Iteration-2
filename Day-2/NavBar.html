@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Web Components Showcase</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    /* General Reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background: #f0f0f0;
+      padding: 20px;
+    }
+
+    /* 1. Responsive Navbar using Flexbox */
+    nav {
+      background: #333;
+      color: white;
+      padding: 1rem;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      margin: 0 1rem;
+      padding: 0.5rem;
+    }
+
+    .navbar a:hover {
+      background: #555;
+      border-radius: 5px;
+    }
+
+    /* 2. Pricing Table using Grid Layout */
+    .pricing {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .plan {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .plan h3 {
+      margin-bottom: 0.5rem;
+    }
+
+    .plan p {
+      margin: 0.5rem 0;
+    }
+
+    /* 3. Animate Button on Hover */
+    .animated-btn {
+      padding: 10px 20px;
+      background: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      transition: background 0.3s ease, transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .animated-btn:hover {
+      background: #0056b3;
+      transform: scale(1.05);
+    }
+
+    /* 4. Card Layout */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .card {
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .card h4 {
+      margin-bottom: 0.5rem;
+    }
+
+    /* 5. Collapsible FAQ with CSS only */
+    .faq {
+      margin-top: 2rem;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid #ccc;
+    }
+
+    .faq-item input {
+      display: none;
+    }
+
+    .faq-item label {
+      display: block;
+      padding: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      background: #eee;
+    }
+
+    .faq-item .answer {
+      max-height: 0;
+      overflow: hidden;
+      background: white;
+      transition: max-height 0.3s ease;
+      padding: 0 1rem;
+    }
+
+    .faq-item input:checked ~ .answer {
+      max-height: 200px;
+      padding: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. Responsive Navbar -->
+  <nav>
+    <div class="navbar">
+      <div><strong>MySite</strong></div>
+      <div>
+        <a href="#">Home</a>
+        <a href="#">Pricing</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 2. Pricing Table -->
+  <section class="pricing">
+    <div class="plan">
+      <h3>Basic</h3>
+      <p>$10/mo</p>
+      <button class="animated-btn">Choose</button>
+    </div>
+    <div class="plan">
+      <h3>Pro</h3>
+      <p>$20/mo</p>
+      <button class="animated-btn">Choose</button>
+    </div>
+    <div class="plan">
+      <h3>Enterprise</h3>
+      <p>$50/mo</p>
+      <button class="animated-btn">Choose</button>
+    </div>
+  </section>
+
+  <!-- 4. Card Layout -->
+  <section class="cards">
+    <div class="card">
+      <h4>Card Title 1</h4>
+      <p>Some quick example text to build on the card title.</p>
+    </div>
+    <div class="card">
+      <h4>Card Title 2</h4>
+      <p>Another card with content that adjusts with screen size.</p>
+    </div>
+    <div class="card">
+      <h4>Card Title 3</h4>
+      <p>Yet another example card.</p>
+    </div>
+  </section>
+
+  <!-- 5. Collapsible FAQ -->
+  <section class="faq">
+    <div class="faq-item">
+      <input type="checkbox" id="q1">
+      <label for="q1">What is your refund policy?</label>
+      <div class="answer">
+        <p>We offer a 30-day money-back guarantee on all plans.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <input type="checkbox" id="q2">
+      <label for="q2">Can I change my plan later?</label>
+      <div class="answer">
+        <p>Yes, you can upgrade or downgrade your plan at any time.</p>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
